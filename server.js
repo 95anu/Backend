@@ -11,35 +11,35 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 app.use(cors());
 
 
-async function scrapeResults() {
-    const url = 'https://govdotin.com/keralalottery/';
-    const response = await axios.get(url);
-    const $ = cheerio.load(response.data);
-    const results = [];
-
-    $('div.results').each((i, element) => {
-        const text = $(element).text().trim().replace(/\n+/g, '\n');
-        results.push(text.split('\n'));
-    });
-
-    const flattenedList = results.flat();
-    return flattenedList;
-}
-
-async function processFlatList() {
-    const flatList = await scrapeResults();
-    return flatList.map(item => {
-        if (/^[a-zA-Z]/.test(item)) {
-            // Return alphanumeric strings as they are
-            const chunks = item.match(/.{1,6}/g);
-            return chunks;
-        } else {
-            // Split numeric strings into 4-digit chunks
-            const chunks = item.match(/.{1,4}/g);
-            return chunks;
-        }
-    }).flat(); // Flatten the resulting array of arrays
-}
+// async function scrapeResults() {
+//     const url = 'https://govdotin.com/keralalottery/';
+//     const response = await axios.get(url);
+//     const $ = cheerio.load(response.data);
+//     const results = [];
+//
+//     $('div.results').each((i, element) => {
+//         const text = $(element).text().trim().replace(/\n+/g, '\n');
+//         results.push(text.split('\n'));
+//     });
+//
+//     const flattenedList = results.flat();
+//     return flattenedList;
+// }
+//
+// async function processFlatList() {
+//     const flatList = await scrapeResults();
+//     return flatList.map(item => {
+//         if (/^[a-zA-Z]/.test(item)) {
+//             // Return alphanumeric strings as they are
+//             const chunks = item.match(/.{1,6}/g);
+//             return chunks;
+//         } else {
+//             // Split numeric strings into 4-digit chunks
+//             const chunks = item.match(/.{1,4}/g);
+//             return chunks;
+//         }
+//     }).flat(); // Flatten the resulting array of arrays
+// }
 
 
 // Fetch data from a Notion database or page

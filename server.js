@@ -93,12 +93,12 @@ async function fetchNotionData() {
 // Endpoint to get processed elements
 app.get('/common_elements', async (req, res) => {
     try {
-        const flatList = await processFlatList();
+        // const flatList = await processFlatList();
         const notionData = await fetchNotionData();
         // Find common elements
-        const commonElements = flatList.filter(item => notionData.includes(item));
+        // const commonElements = flatList.filter(item => notionData.includes(item));
 
-        res.json({ commonElements });
+        res.json({ notionData });
     } catch (error) {
         console.error('Error processing common elements:', error);
         res.status(500).json({ error: 'Failed to process results' });
